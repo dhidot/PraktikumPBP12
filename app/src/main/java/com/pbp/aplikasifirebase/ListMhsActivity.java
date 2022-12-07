@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListMhsActivity extends AppCompatActivity implements MyAdapter.OnItemClickListener {
     List<Mahasiswa> fetchData;
@@ -46,8 +47,8 @@ public class ListMhsActivity extends AppCompatActivity implements MyAdapter.OnIt
                 //iterasi mengambil mahasiswa
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     //Mengambil value setiap child dari 'mahasiswa' (nim,nama,jurusan,angkatan)
-                    String nim = ds.child("nim").getValue().toString();
-                    String nama = ds.child("nama").getValue().toString();
+                    String nim = Objects.requireNonNull(ds.child("nim").getValue()).toString();
+                    String nama = Objects.requireNonNull(ds.child("nama").getValue()).toString();
                     Mahasiswa data = new Mahasiswa(nim,nama);
                     fetchData.add(data);
 
@@ -80,5 +81,9 @@ public class ListMhsActivity extends AppCompatActivity implements MyAdapter.OnIt
         });
     }
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }
 
